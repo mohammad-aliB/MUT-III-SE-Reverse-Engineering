@@ -4,10 +4,10 @@ Decompile all .NET assemblies (DLL, EXE) in a folder using ILSpy command-line to
 In addition to the decompiled assemblies, this script also recursively copies all non-decompiled files to the output folder.
 
 Usage:
-    python3 decompile_assemblies.py <input_folder> <output_folder>
+    python decompile_assemblies.py <input_folder> <output_folder>
     
 Example:
-    python3 decompile_assemblies.py desktop/mut-3-deobfuscated desktop/decompiled
+    python decompile_assemblies.py desktop/mut-3-deobfuscated desktop/decompiled
 """
 
 import argparse
@@ -27,7 +27,7 @@ def decompile_assembly(assembly_path: Path, output_dir: Path) -> bool:
     output_subdir = output_dir / assembly_name
     output_subdir.mkdir(parents=True, exist_ok=True)
     
-    cmd = ["ilspycmd", "-o", str(output_subdir), str(assembly_path)]
+    cmd = ["ilspycmd", "-r", str(assembly_path.parent), "-o", str(output_subdir), str(assembly_path)]
     # Note: ilspycmd generates files named <AssemblyName>.decompiled.cs
     
     try:
